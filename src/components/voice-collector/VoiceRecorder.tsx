@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mic, MicOff, Play, RotateCcw } from 'lucide-react';
+import { Mic, MicOff, Play, RotateCcw, ArrowLeft, ArrowRight } from 'lucide-react';
 
 interface VoiceRecorderProps {
   drugName: string;
@@ -33,78 +33,102 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
 }) => {
   return (
     <>
-      <CardHeader>
-        <CardTitle className="text-2xl text-center text-mint-800">
-          🎤 Record your pronunciation
+      <CardHeader className="text-center pb-8">
+        <div className="mx-auto w-16 h-16 bg-gradient-to-br from-red-400 to-pink-600 rounded-full flex items-center justify-center mb-4 shadow-lg">
+          <span className="text-2xl">🎤</span>
+        </div>
+        <CardTitle className="text-3xl font-bold bg-gradient-to-r from-red-500 to-pink-600 bg-clip-text text-transparent">
+          Record your pronunciation
         </CardTitle>
+        <p className="text-ocean-600 mt-2">Speak clearly and confidently</p>
       </CardHeader>
-      <CardContent className="text-center space-y-6">
-        <p className="text-ocean-700 text-lg">
-          Press the microphone and clearly say <span className="font-bold text-mint-600">"{drugName}"</span>
-        </p>
+      <CardContent className="text-center space-y-8">
+        <div className="bg-gradient-to-r from-mint-50 to-pink-50 p-6 rounded-2xl border border-mint-200">
+          <p className="text-ocean-700 text-xl leading-relaxed">
+            Press the microphone and clearly say{' '}
+            <span className="font-bold text-2xl bg-gradient-to-r from-mint-600 to-pink-600 bg-clip-text text-transparent">
+              "{drugName}"
+            </span>
+          </p>
+        </div>
 
         <div className="flex justify-center">
-          <Button
-            onClick={isRecording ? onStopRecording : onStartRecording}
-            className={`w-24 h-24 rounded-full text-white text-lg font-bold transition-all duration-300 ${
-              isRecording 
-                ? 'bg-red-500 hover:bg-red-600 recording-pulse' 
-                : 'bg-mint-500 hover:bg-mint-600 hover:scale-105'
-            }`}
-          >
-            {isRecording ? (
-              <MicOff className="w-8 h-8" />
-            ) : (
-              <Mic className="w-8 h-8" />
+          <div className="relative">
+            <Button
+              onClick={isRecording ? onStopRecording : onStartRecording}
+              className={`w-28 h-28 rounded-full text-white text-lg font-bold shadow-2xl transition-all duration-300 ${
+                isRecording 
+                  ? 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 animate-pulse' 
+                  : 'bg-gradient-to-r from-mint-500 to-mint-600 hover:from-mint-600 hover:to-mint-700 hover:scale-110'
+              }`}
+            >
+              {isRecording ? (
+                <MicOff className="w-10 h-10" />
+              ) : (
+                <Mic className="w-10 h-10" />
+              )}
+            </Button>
+            {isRecording && (
+              <div className="absolute -inset-4 border-4 border-red-300 rounded-full animate-ping"></div>
             )}
-          </Button>
+          </div>
         </div>
 
         {isRecording && (
-          <p className="text-red-600 font-medium animate-pulse">
-            🔴 Recording... Click to stop
-          </p>
+          <div className="animate-fade-in space-y-2">
+            <p className="text-red-600 font-bold text-xl">
+              🔴 Recording in progress...
+            </p>
+            <p className="text-red-500">
+              Click the microphone to stop
+            </p>
+          </div>
         )}
 
         {recordedAudio && (
-          <div className="bg-mint-50 p-4 rounded-lg space-y-4">
-            <p className="text-mint-800 font-medium">Great! Here's your recording:</p>
+          <div className="bg-gradient-to-r from-mint-50 to-green-50 p-6 rounded-2xl border-2 border-mint-200 space-y-6 animate-fade-in">
+            <div className="flex items-center justify-center space-x-2">
+              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              <p className="text-mint-800 font-bold text-lg">Recording completed successfully!</p>
+            </div>
             <div className="flex justify-center gap-4">
               <Button
                 onClick={onPlayRecording}
                 disabled={isPlayingRecording}
                 variant="outline"
-                className="border-ocean-200 text-ocean-700 hover:bg-ocean-50"
+                className="h-12 px-6 border-2 border-ocean-200 text-ocean-700 hover:bg-ocean-50 rounded-xl font-semibold transition-all duration-300 hover:shadow-md"
               >
-                <Play className="w-4 h-4 mr-2" />
-                {isPlayingRecording ? 'Playing...' : 'Play'}
+                <Play className="w-5 h-5 mr-2" />
+                {isPlayingRecording ? 'Playing...' : 'Preview'}
               </Button>
               <Button
                 onClick={onRetakeRecording}
                 variant="outline"
-                className="border-orange-200 text-orange-700 hover:bg-orange-50"
+                className="h-12 px-6 border-2 border-orange-200 text-orange-700 hover:bg-orange-50 rounded-xl font-semibold transition-all duration-300 hover:shadow-md"
               >
-                <RotateCcw className="w-4 h-4 mr-2" />
+                <RotateCcw className="w-5 h-5 mr-2" />
                 Retake
               </Button>
             </div>
           </div>
         )}
 
-        <div className="flex gap-4 justify-center">
+        <div className="flex gap-6 justify-center pt-4">
           <Button 
             variant="outline" 
             onClick={onBack}
-            className="border-mint-200 text-mint-700 hover:bg-mint-50"
+            className="h-12 px-6 border-2 border-mint-200 text-mint-700 hover:bg-mint-50 hover:border-mint-300 rounded-xl font-semibold transition-all duration-300 hover:shadow-md"
           >
-            ← Back
+            <ArrowLeft className="w-5 h-5 mr-2" />
+            Back
           </Button>
           {recordedAudio && (
             <Button 
               onClick={onSubmitRecording}
-              className="bg-mint-500 hover:bg-mint-600 text-white"
+              className="h-12 px-6 bg-gradient-to-r from-green-500 to-mint-600 hover:from-green-600 hover:to-mint-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
-              Submit Recording →
+              Submit Recording
+              <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
           )}
         </div>
