@@ -27,6 +27,7 @@ const DRUG_NAMES = [
 ];
 
 interface UserInfo {
+  isFromPharmacy: boolean;
   pharmacyName: string;
   gender: string;
   drugName: string;
@@ -37,6 +38,7 @@ type Step = 'info' | 'sample' | 'record' | 'success';
 const VoiceCollector = () => {
   const [currentStep, setCurrentStep] = useState<Step>('info');
   const [userInfo, setUserInfo] = useState<UserInfo>({
+    isFromPharmacy: false,
     pharmacyName: '',
     gender: '',
     drugName: ''
@@ -54,7 +56,7 @@ const VoiceCollector = () => {
   const { toast } = useToast();
 
   const handleInfoSubmit = () => {
-    if (!userInfo.pharmacyName || !userInfo.gender || !userInfo.drugName) {
+    if ((userInfo.isFromPharmacy && !userInfo.pharmacyName) || !userInfo.gender || !userInfo.drugName) {
       toast({
         title: "Please fill in all fields",
         description: "We need all information to proceed.",
@@ -155,7 +157,7 @@ const VoiceCollector = () => {
     console.log('Metadata:', {
       drug: userInfo.drugName,
       gender: userInfo.gender,
-      pharmacy: userInfo.pharmacyName,
+      pharmacy: userInfo.isFromPharmacy ? userInfo.pharmacyName : 'Not from pharmacy',
       timestamp
     });
 
@@ -171,7 +173,7 @@ const VoiceCollector = () => {
 
   const resetApp = () => {
     setCurrentStep('info');
-    setUserInfo({ pharmacyName: '', gender: '', drugName: '' });
+    setUserInfo({ isFromPharmacy: false, pharmacyName: '', gender: '', drugName: '' });
     setRecordedAudio(null);
     setIsRecording(false);
     setIsPlayingSample(false);
@@ -228,17 +230,41 @@ const VoiceCollector = () => {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div>
-                  <Label htmlFor="pharmacy" className="text-ocean-700 font-medium">
-                    Pharmacy Name
+                  <Label className="text-ocean-700 font-medium mb-3 block">
+                    Are you from a pharmacy?
                   </Label>
-                  <Input
-                    id="pharmacy"
-                    placeholder="e.g., Green Life Pharmacy"
-                    value={userInfo.pharmacyName}
-                    onChange={(e) => setUserInfo(prev => ({ ...prev, pharmacyName: e.target.value }))}
-                    className="mt-2 border-mint-200 focus:ring-mint-500"
-                  />
+                  <div className="flex gap-4">
+                    <Button
+                      variant={userInfo.isFromPharmacy === true ? "default" : "outline"}
+                      onClick={() => setUserInfo(prev => ({ ...prev, isFromPharmacy: true }))}
+                      className={userInfo.isFromPharmacy === true ? "bg-mint-500 hover:bg-mint-600 text-white" : "border-mint-200 text-mint-700 hover:bg-mint-50"}
+                    >
+                      Yes
+                    </Button>
+                    <Button
+                      variant={userInfo.isFromPharmacy === false ? "default" : "outline"}
+                      onClick={() => setUserInfo(prev => ({ ...prev, isFromPharmacy: false, pharmacyName: '' }))}
+                      className={userInfo.isFromPharmacy === false ? "bg-mint-500 hover:bg-mint-600 text-white" : "border-mint-200 text-mint-700 hover:bg-mint-50"}
+                    >
+                      No
+                    </Button>
+                  </div>
                 </div>
+
+                {userInfo.isFromPharmacy && (
+                  <div>
+                    <Label htmlFor="pharmacy" className="text-ocean-700 font-medium">
+                      Pharmacy Name
+                    </Label>
+                    <Input
+                      id="pharmacy"
+                      placeholder="e.g., Green Life Pharmacy"
+                      value={userInfo.pharmacyName}
+                      onChange={(e) => setUserInfo(prev => ({ ...prev, pharmacyName: e.target.value }))}
+                      className="mt-2 border-mint-200 focus:ring-mint-500"
+                    />
+                  </div>
+                )}
 
                 <div>
                   <Label htmlFor="gender" className="text-ocean-700 font-medium">
@@ -439,7 +465,7 @@ const VoiceCollector = () => {
                 <div className="bg-mint-50 p-4 rounded-lg">
                   <p className="text-sm text-mint-800">
                     <strong>Recorded:</strong> {userInfo.drugName}<br />
-                    <strong>Pharmacy:</strong> {userInfo.pharmacyName}<br />
+                    <strong>Affiliation:</strong> {userInfo.isFromPharmacy ? userInfo.pharmacyName : 'Not from pharmacy'}<br />
                     <strong>Gender:</strong> {userInfo.gender}
                   </p>
                 </div>
