@@ -63,7 +63,9 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
               }`}
             >
               {isRecording ? (
-                <MicOff className="w-10 h-10" />
+                <div className="flex items-center justify-center">
+                  <div className="w-6 h-6 bg-white rounded-sm"></div>
+                </div>
               ) : (
                 <Mic className="w-10 h-10" />
               )}
