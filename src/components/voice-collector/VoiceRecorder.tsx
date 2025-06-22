@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mic, MicOff, Play, RotateCcw, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Mic, Play, RotateCcw, ArrowLeft, ArrowRight } from 'lucide-react';
 
 interface VoiceRecorderProps {
   drugName: string;
@@ -42,7 +41,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
         </CardTitle>
         <p className="text-ocean-600 mt-2">Speak clearly and confidently</p>
       </CardHeader>
-      <CardContent className="text-center space-y-8">
+      <CardContent className="text-center space-y-8 pb-8">
         <div className="bg-gradient-to-r from-mint-50 to-pink-50 p-6 rounded-2xl border border-mint-200">
           <p className="text-ocean-700 text-xl leading-relaxed">
             Press the microphone and clearly say{' '}
@@ -115,11 +114,11 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
           </div>
         )}
 
-        <div className="flex gap-6 justify-center pt-4">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
           <Button 
             variant="outline" 
             onClick={onBack}
-            className="h-12 px-6 border-2 border-mint-200 text-mint-700 hover:bg-mint-50 hover:border-mint-300 rounded-xl font-semibold transition-all duration-300 hover:shadow-md"
+            className="w-full sm:w-auto h-12 px-8 border-2 border-mint-200 text-mint-700 hover:bg-mint-50 hover:border-mint-300 rounded-xl font-semibold transition-all duration-300 hover:shadow-md"
           >
             <ArrowLeft className="w-5 h-5 mr-2" />
             Back
@@ -127,7 +126,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
           {recordedAudio && (
             <Button 
               onClick={onSubmitRecording}
-              className="h-12 px-6 bg-gradient-to-r from-green-500 to-mint-600 hover:from-green-600 hover:to-mint-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              className="w-full sm:w-auto h-12 px-8 bg-gradient-to-r from-green-500 to-mint-600 hover:from-green-600 hover:to-mint-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
               Submit Recording
               <ArrowRight className="w-5 h-5 ml-2" />
