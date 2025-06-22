@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -66,32 +67,38 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
           <div className="relative">
             <Button
               onClick={handleRecordClick}
-              disabled={false}
-              className={`w-28 h-28 rounded-full text-white text-lg font-bold shadow-2xl transition-all duration-300 ${
+              className={`w-32 h-32 rounded-full text-white text-lg font-bold shadow-2xl transition-all duration-300 border-4 ${
                 isRecording 
-                  ? 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 animate-pulse' 
-                  : 'bg-gradient-to-r from-mint-500 to-mint-600 hover:from-mint-600 hover:to-mint-700 hover:scale-110'
+                  ? 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 animate-pulse border-red-300' 
+                  : 'bg-gradient-to-r from-mint-500 to-mint-600 hover:from-mint-600 hover:to-mint-700 hover:scale-110 border-mint-300'
               }`}
             >
               {isRecording ? (
-                <Square className="w-8 h-8 fill-current" />
+                <div className="flex flex-col items-center">
+                  <Square className="w-10 h-10 fill-current mb-1" />
+                  <span className="text-sm font-semibold">STOP</span>
+                </div>
               ) : (
-                <Mic className="w-10 h-10" />
+                <div className="flex flex-col items-center">
+                  <Mic className="w-12 h-12 mb-1" />
+                  <span className="text-sm font-semibold">RECORD</span>
+                </div>
               )}
             </Button>
             {isRecording && (
-              <div className="absolute -inset-4 border-4 border-red-300 rounded-full animate-ping"></div>
+              <div className="absolute -inset-6 border-4 border-red-300 rounded-full animate-ping"></div>
             )}
           </div>
         </div>
 
         {isRecording && (
-          <div className="animate-fade-in space-y-2">
-            <p className="text-red-600 font-bold text-xl">
-              🔴 Recording in progress...
+          <div className="animate-fade-in space-y-3 bg-red-50 p-4 rounded-xl border-2 border-red-200">
+            <p className="text-red-600 font-bold text-xl flex items-center justify-center gap-2">
+              <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+              Recording in progress...
             </p>
-            <p className="text-red-500">
-              Click the square button to stop recording
+            <p className="text-red-600 font-medium">
+              Click the STOP button above to finish recording
             </p>
           </div>
         )}
@@ -124,23 +131,35 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
           </div>
         )}
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
-          <Button 
-            variant="outline" 
-            onClick={onBack}
-            className="w-full sm:w-auto h-12 px-8 border-2 border-mint-200 text-mint-700 hover:bg-mint-50 hover:border-mint-300 rounded-xl font-semibold transition-all duration-300 hover:shadow-md"
-          >
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Back
-          </Button>
-          {recordedAudio && (
+        {/* Redesigned Bottom Navigation */}
+        <div className="pt-8 border-t border-gray-200">
+          <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
             <Button 
-              onClick={onSubmitRecording}
-              className="w-full sm:w-auto h-12 px-8 bg-gradient-to-r from-green-500 to-mint-600 hover:from-green-600 hover:to-mint-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              variant="outline" 
+              onClick={onBack}
+              className="w-full sm:w-auto h-14 px-8 border-2 border-mint-200 text-mint-700 hover:bg-mint-50 hover:border-mint-300 rounded-xl font-semibold transition-all duration-300 hover:shadow-md text-lg"
             >
-              Submit Recording
-              <ArrowRight className="w-5 h-5 ml-2" />
+              <ArrowLeft className="w-6 h-6 mr-3" />
+              Go Back
             </Button>
+            
+            {recordedAudio && (
+              <Button 
+                onClick={onSubmitRecording}
+                className="w-full sm:w-auto h-14 px-8 bg-gradient-to-r from-green-500 to-mint-600 hover:from-green-600 hover:to-mint-700 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-lg"
+              >
+                Submit Recording
+                <ArrowRight className="w-6 h-6 ml-3" />
+              </Button>
+            )}
+          </div>
+          
+          {!recordedAudio && (
+            <div className="mt-4 text-center">
+              <p className="text-gray-500 text-sm">
+                Complete your recording to proceed
+              </p>
+            </div>
           )}
         </div>
 
