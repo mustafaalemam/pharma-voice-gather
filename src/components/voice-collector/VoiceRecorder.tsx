@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mic, Play, RotateCcw, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Mic, Play, RotateCcw, ArrowLeft, ArrowRight, Square } from 'lucide-react';
 
 interface VoiceRecorderProps {
   drugName: string;
@@ -30,6 +31,14 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
   onBack,
   recordingAudioRef
 }) => {
+  const handleRecordClick = () => {
+    if (isRecording) {
+      onStopRecording();
+    } else {
+      onStartRecording();
+    }
+  };
+
   return (
     <>
       <CardHeader className="text-center pb-8">
@@ -54,7 +63,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
         <div className="flex justify-center">
           <div className="relative">
             <Button
-              onClick={isRecording ? onStopRecording : onStartRecording}
+              onClick={handleRecordClick}
               className={`w-28 h-28 rounded-full text-white text-lg font-bold shadow-2xl transition-all duration-300 ${
                 isRecording 
                   ? 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 animate-pulse' 
@@ -62,9 +71,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
               }`}
             >
               {isRecording ? (
-                <div className="flex items-center justify-center">
-                  <div className="w-6 h-6 bg-white rounded-sm"></div>
-                </div>
+                <Square className="w-8 h-8 fill-white" />
               ) : (
                 <Mic className="w-10 h-10" />
               )}
@@ -81,7 +88,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
               🔴 Recording in progress...
             </p>
             <p className="text-red-500">
-              Click the microphone to stop
+              Click the square button to stop recording
             </p>
           </div>
         )}
