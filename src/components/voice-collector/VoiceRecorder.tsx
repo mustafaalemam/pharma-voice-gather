@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -32,9 +31,12 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
   recordingAudioRef
 }) => {
   const handleRecordClick = () => {
+    console.log('Record button clicked, current isRecording:', isRecording);
     if (isRecording) {
+      console.log('Stopping recording...');
       onStopRecording();
     } else {
+      console.log('Starting recording...');
       onStartRecording();
     }
   };
@@ -64,6 +66,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
           <div className="relative">
             <Button
               onClick={handleRecordClick}
+              disabled={false}
               className={`w-28 h-28 rounded-full text-white text-lg font-bold shadow-2xl transition-all duration-300 ${
                 isRecording 
                   ? 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 animate-pulse' 
@@ -71,7 +74,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
               }`}
             >
               {isRecording ? (
-                <Square className="w-8 h-8 fill-white" />
+                <Square className="w-8 h-8 fill-current" />
               ) : (
                 <Mic className="w-10 h-10" />
               )}
