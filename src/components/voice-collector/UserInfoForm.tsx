@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -89,7 +90,7 @@ const UserInfoForm: React.FC<UserInfoFormProps> = ({ userInfo, setUserInfo, onSu
               placeholder="e.g., Green Life Pharmacy"
               value={userInfo.pharmacyName}
               onChange={(e) => setUserInfo(prev => ({ ...prev, pharmacyName: e.target.value }))}
-              className="h-12 text-lg border-2 border-mint-200 focus:border-mint-400 focus:ring-mint-400 rounded-xl transition-all duration-300"
+              className="h-12 text-lg border-2 border-mint-200 focus:border-mint-400 focus:ring-mint-400 rounded-xl transition-all duration-300 placeholder:text-black"
             />
           </div>
         )}
@@ -114,7 +115,7 @@ const UserInfoForm: React.FC<UserInfoFormProps> = ({ userInfo, setUserInfo, onSu
             Drug Name
           </Label>
           <Select value={userInfo.drugName} onValueChange={(value) => setUserInfo(prev => ({ ...prev, drugName: value }))}>
-            <SelectTrigger className="h-12 text-lg border-2 border-mint-200 focus:border-mint-400 focus:ring-mint-400 rounded-xl">
+            <SelectTrigger className="h-12 text-lg border-2 border-mint-200 focus:border-mint-400 focus:ring-mint-400 rounded-xl placeholder:text-black">
               <SelectValue placeholder="Select a drug name to pronounce" />
             </SelectTrigger>
             <SelectContent className="bg-white border-2 border-mint-200 rounded-xl shadow-xl max-h-60">
