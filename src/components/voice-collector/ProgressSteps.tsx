@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 
 type Step = 'info' | 'sample' | 'record' | 'success';
@@ -18,21 +19,21 @@ const ProgressSteps: React.FC<ProgressStepsProps> = ({ currentStep }) => {
   const currentStepIndex = steps.findIndex(step => step.id === currentStep);
 
   return (
-    <div className="flex justify-center mb-12">
-      <div className="flex items-center space-x-4">
+    <div className="flex justify-center mb-8 md:mb-12 px-4">
+      <div className="flex items-center space-x-2 sm:space-x-4 overflow-x-auto">
         {steps.map((step, index) => (
-          <div key={step.id} className="flex items-center">
+          <div key={step.id} className="flex items-center flex-shrink-0">
             <div className="flex flex-col items-center">
-              <div className={`w-14 h-14 rounded-full flex items-center justify-center text-lg font-bold transition-all duration-500 shadow-lg ${
+              <div className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-sm sm:text-base md:text-lg font-bold transition-all duration-500 shadow-lg ${
                 currentStep === step.id 
                   ? 'bg-gradient-to-r from-mint-500 to-ocean-500 text-white shadow-xl scale-110' 
                   : index < currentStepIndex
                   ? 'bg-gradient-to-r from-mint-200 to-mint-300 text-mint-800 shadow-md'
                   : 'bg-gray-100 text-gray-400 shadow-sm'
               }`}>
-                <span className="text-xl">{step.icon}</span>
+                <span className="text-sm sm:text-base md:text-xl">{step.icon}</span>
               </div>
-              <span className={`mt-2 text-sm font-semibold transition-colors duration-300 ${
+              <span className={`mt-1 sm:mt-2 text-xs sm:text-sm font-semibold transition-colors duration-300 hidden sm:block ${
                 currentStep === step.id 
                   ? 'text-mint-600' 
                   : index < currentStepIndex
@@ -43,7 +44,7 @@ const ProgressSteps: React.FC<ProgressStepsProps> = ({ currentStep }) => {
               </span>
             </div>
             {index < 3 && (
-              <div className={`w-16 h-1 mx-4 rounded-full transition-all duration-500 ${
+              <div className={`w-8 sm:w-12 md:w-16 h-1 mx-2 sm:mx-4 rounded-full transition-all duration-500 ${
                 index < currentStepIndex
                   ? 'bg-gradient-to-r from-mint-300 to-mint-400 shadow-sm'
                   : 'bg-gray-200'
@@ -57,3 +58,4 @@ const ProgressSteps: React.FC<ProgressStepsProps> = ({ currentStep }) => {
 };
 
 export default ProgressSteps;
+
