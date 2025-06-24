@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -100,12 +99,12 @@ const UserInfoForm: React.FC<UserInfoFormProps> = ({ userInfo, setUserInfo, onSu
             Gender
           </Label>
           <Select value={userInfo.gender} onValueChange={(value) => setUserInfo(prev => ({ ...prev, gender: value }))}>
-            <SelectTrigger className="h-12 text-lg border-2 border-mint-200 focus:border-mint-400 focus:ring-mint-400 rounded-xl">
+            <SelectTrigger className="h-12 text-lg border-2 border-blue-300 focus:border-blue-500 focus:ring-blue-400 rounded-xl bg-blue-50 hover:bg-blue-100 transition-all duration-300">
               <SelectValue placeholder="Select your gender" />
             </SelectTrigger>
-            <SelectContent className="bg-white border-2 border-mint-200 rounded-xl shadow-xl">
-              <SelectItem value="Male" className="text-lg py-3">👨 Male</SelectItem>
-              <SelectItem value="Female" className="text-lg py-3">👩 Female</SelectItem>
+            <SelectContent className="bg-white border-2 border-blue-300 rounded-xl shadow-xl">
+              <SelectItem value="Male" className="text-lg py-3 hover:bg-blue-50 focus:bg-blue-100">👨 Male</SelectItem>
+              <SelectItem value="Female" className="text-lg py-3 hover:bg-blue-50 focus:bg-blue-100">👩 Female</SelectItem>
             </SelectContent>
           </Select>
         </div>
